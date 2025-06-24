@@ -1,3 +1,4 @@
+import 'package:expence_tracker/components/expense_summary.dart';
 import 'package:expence_tracker/components/expense_tile.dart';
 import 'package:expence_tracker/data/expense_data.dart';
 import 'package:expence_tracker/models/expense_item.dart';
@@ -27,13 +28,21 @@ class _HomePageState extends State<HomePage> {
             // expense name
             TextField(
               controller: newExpenseNameController,
-            ), // TextField
-           
+              decoration: InputDecoration(
+                hintText: 'Enter expense name',
+              ),
+            ),
+
             // expense amount
             TextField(
               controller: newExpenseAmountController,
-            ), // TextField
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: 'Enter amount',
+              ),
+            ),
           ],
+
         ), // Column
         actions: [
           // save button
@@ -86,11 +95,19 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.grey[300],
         floatingActionButton: FloatingActionButton(
           onPressed: addNewExpense,
-          child: Icon(Icons.add),
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.grey[300],
+          child: const Icon(Icons.add),
         ), // FloatingActionButton
         body: ListView(children: [
           // weekly summary
-          
+          ExpenseSummary(startOfWeek: value.startOfWeekDate()),
+
+
+          const SizedBox(height: 20), // spacing
+
+
+
           // expense list
           ListView.builder(
             shrinkWrap: true,
