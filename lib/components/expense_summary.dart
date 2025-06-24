@@ -36,21 +36,52 @@ class ExpenseSummary extends StatelessWidget {
         // Calculate maxY dynamically
         double maxY = [sun, mon, tue, wed, thur, fri, sat].reduce((a, b) => a > b ? a : b);
 
-        // Optionally fallback to 100 if all values are 0
-        if (maxY == 0) maxY = 100;
+        // Optionally fallback to 300 if all values are too low
+        if (maxY <= 300) maxY = 300;
 
-        return SizedBox(
-          height: 200,
-          child: MyBarGraph(
-            maxY: maxY,
-            sunAmount: sun,
-            monAmount: mon,
-            tueAmount: tue,
-            wedAmount: wed,
-            thurAmount: thur,
-            friAmount: fri,
-            satAmount: sat,
+        // Week total
+        double weekTotal = sun + mon + tue + wed + thur + fri + sat;
+
+        return Column(
+          children: [
+          // week total
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Row(
+              children: [
+                const Text(
+                  'Week Total: ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20, // ⬅️ Increased size
+                  ),
+                ),
+                Text(
+                  '₹${weekTotal.toString()}',
+                  style: const TextStyle(
+                    fontSize: 20, // ⬅️ Increased size
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
+
+            // bar graph
+            SizedBox(
+              height: 200,
+              child: MyBarGraph(
+                maxY: maxY,
+                sunAmount: sun,
+                monAmount: mon,
+                tueAmount: tue,
+                wedAmount: wed,
+                thurAmount: thur,
+                friAmount: fri,
+                satAmount: sat,
+              ),
+            ),
+          ],
         );
       },
     );
